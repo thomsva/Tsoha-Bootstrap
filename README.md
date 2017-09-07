@@ -2,7 +2,7 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://www.cs.helsinki.fi)
+* [Linkki sovellukseeni](http://thsv.users.cs.helsinki.fi/wine/)
 * [Linkki dokumentaatiooni](https://www.github.com)
 
 ## Työn aihe
