@@ -15,21 +15,23 @@ type varchar(50)
 
 CREATE TABLE Tag(
 id SERIAL PRIMARY KEY,
-tagText varchar(50) NOT NULL
+text varchar(50) NOT NULL,
 );
-
 
 CREATE TABLE Review(
 id SERIAL PRIMARY KEY,
-usrId INTEGER NOT NULL REFERENCES Usr(id),
-wineId INTEGER NOT NULL REFERENCES Wine(id),
+usrId	integer NOT NULL,
+wineId integer NOT NULL,
 reviewText varchar(500),
-stars integer CHECK(stars<=5 AND stars>=1)
+stars integer,
+FOREIGN KEY(usrId) REFERENCES Usr(id),
+FOREIGN KEY(wineId) REFERENCES Wine(id)
 );
 
 CREATE TABLE ReviewTag(
 id SERIAL PRIMARY KEY,
-reviewId INTEGER NOT NULL REFERENCES Review(id),
-tagId INTEGER NOT NULL REFERENCES Tag(id)
+reviewId integer NOT NULL,
+tagId integer NOT NULL,
+FOREIGN KEY(reviewId) REFERENCES Review(id),
+FOREIGN KEY(tagId) REFERENCES Tag(id)
 );
-

@@ -7,6 +7,13 @@ Yleisiä linkkejä:
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Pokemon-kanta.html) 
+Viinitietokannan käyttäjät voivat lukea ja kirjoittaa arvosteluja viineistä. 
 
-Testimuutos4
+
+## Linkkejä sivustolle
+
+http://thsv.users.cs.helsinki.fi/wine/winereview
+http://thsv.users.cs.helsinki.fi/wine/wineshow
+http://thsv.users.cs.helsinki.fi/wine/winelist
+http://thsv.users.cs.helsinki.fi/wine/signup
+http://thsv.users.cs.helsinki.fi/wine/login
