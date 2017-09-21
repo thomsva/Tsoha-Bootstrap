@@ -1,19 +1,27 @@
 <?php
 
   $routes->get('/', function() {
-    HelloWorldController::index();
+    WinesController::index();
   });
 
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
   });
 
-  $routes->get('/winelist', function() {
-    HelloWorldController::winelist();
+  $routes->get('/wine', function() {
+    WinesController::index();
   });
 
-  $routes->get('/wineshow', function() {
-    HelloWorldController::wineshow();
+  $routes->post('/wine', function() {
+    WinesController::store();
+  });
+
+  $routes->get('/wine/new', function() {
+    WinesController::create();
+  });
+
+  $routes->get('/wine/:id', function($id) {
+    WinesController::wineshow($id);
   });
 
   $routes->get('/winereview', function() {

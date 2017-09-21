@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Lista viineistä</h1>
+    <h1>Lista viineistä (wine_list.html)</h1>
   
     <table class="table table-bordered table-striped">
       <thead>
@@ -12,18 +12,20 @@
         </tr>
       </thead>
       <tbody>
+          {% for wine in wines %}
         <tr>
-          <td><a href="wineshow">Bouchard La Vignée Pinot Noir 2015</a></td>
-          <td>punaviini</td>
-          <td>*** 3.4 (7 arviota)</td>
+          <td><a href="wineshow">{{wine.name}}</a></td>
+          <td>{{wine.type}}</td>
+          <td>{% for i in 1..wine.reviewstars %}*{% endfor %}   ({{wine.reviewcount}} arviota)</td>
         </tr>
-        <tr>
-          <td><a href="wineshow">Bernard Massard</a></td>
-          <td>kuohuviini</td>
-          <td>**** 4.2 (73 arviota)</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
+
+    <p>
+       <a href="{{base_path}}/wine/new" class="btn btn-success">Lisää viini</a>
+    </p>
+    
 
 
 {% endblock %}

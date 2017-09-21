@@ -1,16 +1,22 @@
 <?php
 
+
   class HelloWorldController extends BaseController{
 
     public static function index(){
       // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-       View::make('wine_list.html');
+       C
        //echo 'Tämä on etusivu!';
     }
 
     public static function sandbox(){
       // Testaa koodiasi täällä
-      View::make('testi.html');
+      $ekaviini = Wine::find(1);
+      $wines = Wine::all();
+      // Kint-luokan dump-metodi tulostaa muuttujan arvon
+      Kint::dump($wines);
+      Kint::dump($ekaviini);
+      //View::make('testi.html');
     }
 
     public static function winelist(){
