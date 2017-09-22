@@ -28,14 +28,18 @@ class Wine extends BaseModel{
                 'type'=>$row['type'],
                 'reviewstars'=>$row['reviewstars'],
                 'reviewcount'=>$row['reviewcount']
-
             ));
         }
         return $wines;
     }
 
     public static function find($id){
-        $query=DB::connection()->prepare('SELECT * FROM Wine WHERE id = :id LIMIT 1');
+        $query=DB::connection()->prepare(
+            'SELECT id,name,region,winetext,type,reviewstars,reviewcount 
+            FROM Wine
+            LEFT JOIN (SELECT wineid,AVG (stars) AS reviewstars, COUNT (id) AS reviewcount FROM Review GROUP BY wineid) AS r
+            ON Wine.id=r.wineid
+            WHERE id = :id LIMIT 1');
         $query->execute(array('id'=>$id));
         $row=$query->fetch();
 
@@ -45,7 +49,10 @@ class Wine extends BaseModel{
                 'name'=>$row['name'],
                 'region'=>$row['region'],
                 'winetext'=>$row['winetext'],
-                'type'=>$row['type']
+                'type'=>$row['type'],
+                'reviewstars'=>$row['reviewstars'],
+                'reviewcount'=>$row['reviewcount']
+
             ));
             return $wine;
         }
@@ -55,15 +62,17 @@ class Wine extends BaseModel{
     }
 
     public function starstring(){
+        //muuttaa viinin arvostelun tähdiksi, esim. 3=***. 
         $x="";
-        for ($i = 0; $i < $this->stars; $i++) {
+        Kint::dump($this->reviewstars);
+        for ($i = 0; $i < $this->reviewstars; $i++) {
             $x=$x."*";
         } 
         return $x;
     }
 
     public function save(){
-        
+        //tallentaa Wine-olion tietokantaan uutena rivinä
         $query = DB::connection()->prepare('
             INSERT INTO Wine (name, region, winetext, type) 
             VALUES (:name, :region, :winetext, :type) RETURNING id');

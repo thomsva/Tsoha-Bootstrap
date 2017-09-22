@@ -9,10 +9,9 @@ class WinesController extends BaseController{
 
     public static function wineshow($id){
         $wine=Wine::find($id);
-        View::make('wine/wine_show.html', array('wine'=>$wine));
+       
+        View::make('wine/wine_show.html', array('wine'=>$wine, 'starstring'=>$wine->starstring()));
         
-        $startest=$wine->starstring();
-        Kint::dump($startest);
     }
 
     public static function create(){

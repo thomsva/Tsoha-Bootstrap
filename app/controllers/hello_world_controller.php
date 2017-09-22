@@ -3,11 +3,7 @@
 
   class HelloWorldController extends BaseController{
 
-    public static function index(){
-      // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-       C
-       //echo 'Tämä on etusivu!';
-    }
+
 
     public static function sandbox(){
       // Testaa koodiasi täällä
