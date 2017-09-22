@@ -12,7 +12,8 @@ class Wine extends BaseModel{
         $query=DB::connection()->prepare(
             'SELECT id,name,region,winetext,type,reviewstars,reviewcount 
             FROM Wine
-            LEFT JOIN (SELECT wineid,AVG (stars) AS reviewstars, COUNT (id) AS reviewcount FROM Review GROUP BY wineid) AS r
+            LEFT JOIN (SELECT wineid, COALESCE(AVG(stars),0) AS reviewstars, 
+                COALESCE(COUNT (id),0) AS reviewcount FROM Review GROUP BY wineid) AS r
             ON Wine.id=r.wineid;');
         $query->execute();
         $rows=$query->fetchAll();
@@ -63,8 +64,8 @@ class Wine extends BaseModel{
 
     public function starstring(){
         //muuttaa viinin arvostelun tähdiksi, esim. 3=***. 
-        $x="";
-        Kint::dump($this->reviewstars);
+        $x=" ";
+        //Kint::dump($this->reviewstars);
         for ($i = 0; $i < $this->reviewstars; $i++) {
             $x=$x."*";
         } 

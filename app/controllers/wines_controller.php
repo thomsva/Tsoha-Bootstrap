@@ -4,6 +4,7 @@
 class WinesController extends BaseController{
     public static function index(){
         $wines=Wine::all();
+
         View::make('wine/index.html', array('wines'=>$wines));
     }
 

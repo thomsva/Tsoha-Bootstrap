@@ -16,7 +16,7 @@
         <tr>
           <td><a href="{{base_path}}/wine/{{wine.id}}">{{wine.name}}</a></td>
           <td>{{wine.type}}</td>
-          <td>{% for i in 1..wine.reviewstars %}*{% endfor %}   ({{wine.reviewcount}} arviota)</td>
+          <td>{{wine.starstring()}} ({{wine.reviewcount}})</td>
         </tr>
         {% endfor %}
       </tbody>
