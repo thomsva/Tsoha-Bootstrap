@@ -55,9 +55,9 @@ class Wine extends BaseModel{
     }
 
     public function starstring(){
-        $x=0;
+        $x="";
         for ($i = 0; $i < $this->stars; $i++) {
-            $x=$x+1;
+            $x=$x."*";
         } 
         return $x;
     }
