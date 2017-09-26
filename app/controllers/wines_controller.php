@@ -28,13 +28,23 @@ class WinesController extends BaseController{
             'type' => $params['type']
         ));
         
+        $v = new Valitron\Validator(array('name' => 'Chester Tester'));
+        $v->rule('required', 'name');
+        if($v->validate()) {
+            echo "Yay! We're all good!";
+        } else {
+            // Errors
+            print_r($v->errors());
+        }
+
+
         $errors=$wine->validate_name();
         Kint::dump($errors);
 
         Kint::dump($params);
         //$wine->save();
 
-        Redirect::to('/wine/' . $wine->id, array('message' => 'Viinin lisääminen onnistui!'));
+        //Redirect::to('/wine/' . $wine->id, array('message' => 'Viinin lisääminen onnistui!'));
     }
 
 }
