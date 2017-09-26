@@ -84,7 +84,22 @@ class Wine extends BaseModel{
             'type' => $this->type));
         $row = $query->fetch();
         $this->id = $row['id'];
-      }
+    }
+
+    public function validate_name(){
+        $errors = array();
+        if($this->name == '' || $this->name == null){
+          $errors[] = 'Nimi ei saa olla tyhjä!';
+        }
+        if(strlen($this->name) < 3){
+          $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
+        }
+        if(strlen($this->name) > 30){
+            $errors[] = 'Nimi saa olla enintään 30 merkkiä pitkä!';
+        }
+      
+        return $errors;
+    }
 
 
   }

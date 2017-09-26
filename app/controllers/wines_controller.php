@@ -28,8 +28,11 @@ class WinesController extends BaseController{
             'type' => $params['type']
         ));
         
-        //Kint::dump($params);
-        $wine->save();
+        $errors=$wine->validate_name();
+        Kint::dump($errors);
+
+        Kint::dump($params);
+        //$wine->save();
 
         Redirect::to('/wine/' . $wine->id, array('message' => 'Viinin lisääminen onnistui!'));
     }
