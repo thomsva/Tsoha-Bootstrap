@@ -3,9 +3,6 @@
 {% block content %}
 
     <h1>{{wine.name}} (wine_show.html)</h1>
-      <div class="alert alert-success">
-        {{message}}
-      </div>
       <ul>
         <li><strong>Alkuperä: </strong>{{wine.region}} </li>
         <li><strong>Tyyppi: </strong>{{wine.type}}</li>
@@ -15,6 +12,9 @@
       <p>
         {{wine.winetext}}
       </p>
+      <p>{% if user_logged_in %}
+          <h1>Käyttäjän {{user_logged_in.name}} viinikirjasto</h1>
+        {% endif %}</p>
 
       <h1>Arviot</h1>
       <p><strong>Huom! Alla oleva on vielä tässä vaiheessa staattista testidataa.</strong></p>

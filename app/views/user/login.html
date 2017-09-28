@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Kirjautuminen</h1>
+
+        <form method="post" action="{{base_path}}/login">
+            <input type="text" class="form-control" placeholder="Sähköposti" value="{{email}}" name='email'>
+            <input type="password" class="form-control" placeholder="Salasana" name="password">
+            <button type="submit" class="btn btn-default">Kirjaudu</button>
+        </form>
+{% endblock %}

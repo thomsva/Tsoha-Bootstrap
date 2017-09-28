@@ -32,9 +32,16 @@
     HelloWorldController::signup();
   });
 
-  $routes->get('/login', function() {
-    HelloWorldController::login();
+  $routes->get('/login', function(){
+    UsersController::login();
   });
 
+  $routes->post('/login', function(){
+    UsersController::handle_login();
+  });
+
+  $routes->get('/logout', function(){
+    UsersController::logout();
+  });
 
   
