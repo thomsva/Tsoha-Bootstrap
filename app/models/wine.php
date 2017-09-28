@@ -86,20 +86,34 @@ class Wine extends BaseModel{
         $this->id = $row['id'];
     }
 
-    public function validate_name(){
-        $errors = array();
-        if($this->name == '' || $this->name == null){
-          $errors[] = 'Nimi ei saa olla tyhjä!';
-        }
-        if(strlen($this->name) < 3){
-          $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
-        }
-        if(strlen($this->name) > 30){
-            $errors[] = 'Nimi saa olla enintään 30 merkkiä pitkä!';
-        }
-      
-        return $errors;
+    public function update(){
+        //tallentaa Wine-olion muutokset tietokantaan 
+        $query = DB::connection()->prepare('
+            UPDATE Wine
+            SET name=:name, 
+            region=:region, 
+            winetext=:winetext,
+            type=:type
+            WHERE id=:id');
+        $query->execute(array(
+            'id' => $this->id,
+            'name' => $this->name, 
+            'region' => $this->region, 
+            'winetext' => $this->winetext, 
+            'type' => $this->type));
     }
+
+    
+
+    public function destroy(){
+        $query = DB::connection()->prepare('
+        DELETE FROM Wine
+        WHERE id=:id');
+    $query->execute(array(
+        'id' => $this->id));        
+    }
+
+
 
 
   }

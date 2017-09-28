@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää uusi viini tietokantaan</h1>
+<h1>Muokkaa viinin tietoja</h1>
 
-<form method="post" action="{{base_path}}/wine">
+<form method="post" action="{{base_path}}/wine/update">
+    <input type="hidden" class="form-control" name="id" placeholder="Viinin ID" value="{{wine.id}}">
     <input type="text" class="form-control" name="name" placeholder="Viinin nimi" value="{{wine.name}}">
     <input type="text" class="form-control" name="region" placeholder="Alkuperä (alue)" value="{{wine.region}}">
     <textarea class="form-control" rows="3" placeholder="Kuvaus" name="winetext">{{wine.winetext}}</textarea>
     <input type="text" class="form-control" name="type" placeholder="Tyyppi" value="{{wine.type}}">
-    <button type="submit" class="btn btn-default">Lähetä</button>
+    <button type="submit" class="btn btn-default">Tallenna muutokset</button>
+    <a href="{{base_path}}/wine/edit/{{wine.id}}" class="btn btn-default">Palauta alkuperäiset tiedot</a>
+
 </form>
 {% endblock %}

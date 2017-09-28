@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>{{wine.name}} (wine_show.html)</h1>
+    <h1>{{wine.name}}</h1>
       <ul>
         <li><strong>Alkuperä: </strong>{{wine.region}} </li>
         <li><strong>Tyyppi: </strong>{{wine.type}}</li>
@@ -12,16 +12,21 @@
       <p>
         {{wine.winetext}}
       </p>
-      <p>{% if user_logged_in %}
-          <h1>Käyttäjän {{user_logged_in.name}} viinikirjasto</h1>
-        {% endif %}</p>
 
-      <h1>Arviot</h1>
+      {% if user_logged_in %}
+      <p>
+          <a href="{{base_path}}/wine/edit/{{wine.id}}" class="btn btn-default">Muokkaa tietoja</a> 
+          <a href="{{base_path}}/wine/delete/{{wine.id}}" class="btn btn-default">Poista</a> 
+          <a href="winereview" class="btn btn-default">Lisää oma arvio (under construction)</a>
+      </p>
+      {% endif %}
+      
+      
+      <h2>Arviot</h2>
       <p><strong>Huom! Alla oleva on vielä tässä vaiheessa staattista testidataa.</strong></p>
       <p>Arvioita yhteensä</p>
     
 
-      <p> <a href="winereview" class="btn btn-default">Lisää oma arvio</a>
 
       <table class="table table-bordered table-striped">
         <tbody>

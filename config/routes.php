@@ -24,6 +24,22 @@
     WinesController::wineshow($id);
   });
 
+  $routes->get('/wine/edit/:id', function($id) {
+    WinesController::edit($id);
+  });
+
+  $routes->post('/wine/edit/:id', function($id) {
+    WinesController::retry_edit();
+  });
+
+  $routes->post('/wine/update', function() {
+    WinesController::update();
+  });
+
+  $routes->get('/wine/delete/:id', function($id) {
+    WinesController::destroy($id);
+  });
+
   $routes->get('/winereview', function() {
     HelloWorldController::winereview();
   });

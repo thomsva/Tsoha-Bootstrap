@@ -24,7 +24,7 @@ class UsersController extends BaseController{
 
     public static function logout(){
         unset($_SESSION["userid"]);
-        Redirect::to('/', array('message' => 'Uloskirjautuminen onnistui!'));
+        Redirect::to('/', array('message' => 'Olet kirjautunut ulos!'));
 
 
     }
