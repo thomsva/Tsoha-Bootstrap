@@ -20,7 +20,12 @@ class WinesController extends BaseController{
     }
 
     public static function create(){
-        View::make('wine/new.html');        
+        $user=self::get_user_logged_in();
+        if($user){
+            View::make('wine/new.html');  
+        }else{
+            View::make('user/login.html', array('message' => 'Kirjaudu ensin sisään!'));
+        }      
     }
 
     public static function store(){
@@ -41,7 +46,7 @@ class WinesController extends BaseController{
                 'type' => $params['type']
             ));
             $wine->save();
-            Redirect::to('/wine/' . $wine->id, array('message' => 'Viinin lisääminen onnistui!'));
+            Redirect::to('/wine/'.$wine->id, array('message' => 'Viinin lisääminen onnistui!'));
             
         }else{
             // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi

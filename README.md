@@ -10,12 +10,14 @@ Yleisiä linkkejä:
 Viinitietokannan käyttäjät voivat lukea ja kirjoittaa arvosteluja viineistä. 
 
 ## Linkkejä sivustolle
-
 http://thsv.users.cs.helsinki.fi/wine/
 http://thsv.users.cs.helsinki.fi/wine/wine/1
+http://thsv.users.cs.helsinki.fi/wine/login
+
+
 http://thsv.users.cs.helsinki.fi/wine/wine/new
+http://thsv.users.cs.helsinki.fi/wine/wine/edit/1
 
 ## Mallisivuja, ei vielä toiminnallisuutta
 http://thsv.users.cs.helsinki.fi/wine/signup
-http://thsv.users.cs.helsinki.fi/wine/login
 http://thsv.users.cs.helsinki.fi/wine/winereview
