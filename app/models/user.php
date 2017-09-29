@@ -31,11 +31,6 @@ class User extends BaseModel{
         $query = DB::connection()->prepare('SELECT * FROM usr WHERE email = :email AND password = :password LIMIT 1');
         $query->execute(array('email' => $email, 'password' => $password));
         $row = $query->fetch();
-
-        Kint::dump($email);
-        Kint::dump($password);
-        Kint::dump($row);
-
         if($row){
             $user=new User(array(
                 'id'=>$row['id'],

@@ -1,11 +1,20 @@
 <?php
 
-//Seuraavia rivejä ei tarvita jos ei käytetä Valitronin omia virheviestejä. 
-//use Valitron\Validator as V;
-//V::langDir('vendor/vlucas/valitron/lang');
-//V::lang('fi');
-
 class WinesController extends BaseController{
+
+    private static function validate_inputs($v){
+        // Validoitiin käytetään Valitron\Validator luokan ilmentymää. 
+        // Tämä funktio tarkistaa wine -luokan ilmentymään syötettävää
+        // tietoa Valitronin palveluita hyödyntäen. 
+        $v->rule('required', 'name')->message('Nimi vaaditaan'); 
+        $v->rule('lengthMax','name',30)->message('Nimi entintään 30 merkkiä');
+        $v->rule('required', 'region')->message('Alkuperä (alue) vaaditaan'); 
+        $v->rule('lengthMax', 'region',30)->message('Alkuperä (alue) entintään 30 merkkiä');
+        $v->rule('lengthMax', 'winetext',500)->message('Kuvaus entintään 500 merkkiä');
+        $v->rule('required', 'type')->message('Tyyppi vaaditaan'); 
+        $v->rule('lengthMax', 'type',30)->message('Tyyppi entintään 30 merkkiä');
+        return $v->validate();
+    }
     
     public static function index(){
         $wines=Wine::all();
@@ -31,14 +40,7 @@ class WinesController extends BaseController{
     public static function store(){
         $params=$_POST;
         $v = new Valitron\Validator($params); 
-        $v->rule('required', 'name')->message('Nimi vaaditaan'); 
-        $v->rule('lengthMax','name',30)->message('Nimi entintään 30 merkkiä');
-        $v->rule('required', 'region')->message('Alkuperä (alue) vaaditaan'); 
-        $v->rule('lengthMax', 'region',30)->message('Alkuperä (alue) entintään 30 merkkiä');
-        $v->rule('lengthMax', 'winetext',500)->message('Kuvaus entintään 500 merkkiä');
-        $v->rule('required', 'type')->message('Tyyppi vaaditaan'); 
-        $v->rule('lengthMax', 'type',30)->message('Tyyppi entintään 30 merkkiä');
-        if($v->validate()) {
+        if(self::validate_inputs($v)) {
             $wine= new Wine(array(
                 'name' => $params['name'],
                 'region' => $params['region'],
@@ -47,7 +49,6 @@ class WinesController extends BaseController{
             ));
             $wine->save();
             Redirect::to('/wine/'.$wine->id, array('message' => 'Viinin lisääminen onnistui!'));
-            
         }else{
             // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi
             $errors=self::array_flatten($v->errors());
@@ -73,18 +74,10 @@ class WinesController extends BaseController{
         View::make('wine/edit.html', array('wine'=>$params, 'user_logged_in'=>$user));
     }
 
-
     public static function update(){
         $params=$_POST;
         $v = new Valitron\Validator($params); 
-        $v->rule('required', 'name')->message('Nimi vaaditaan'); 
-        $v->rule('lengthMax','name',30)->message('Nimi entintään 30 merkkiä');
-        $v->rule('required', 'region')->message('Alkuperä (alue) vaaditaan'); 
-        $v->rule('lengthMax', 'region',30)->message('Alkuperä (alue) entintään 30 merkkiä');
-        $v->rule('lengthMax', 'winetext',500)->message('Kuvaus entintään 500 merkkiä');
-        $v->rule('required', 'type')->message('Tyyppi vaaditaan'); 
-        $v->rule('lengthMax', 'type',30)->message('Tyyppi entintään 30 merkkiä');
-        if($v->validate()) {
+        if(self::validate_inputs($v)) {
             $wine= new Wine(array(
                 'id' => $params['id'],
                 'name' => $params['name'],
@@ -94,7 +87,6 @@ class WinesController extends BaseController{
             ));
             $wine->update();
             Redirect::to('/wine/' . $wine->id, array('message' => 'Tietojen muokkaaminen onnistui!'));
-            
         }else{
             // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi
             $errors=self::array_flatten($v->errors());
@@ -108,7 +100,4 @@ class WinesController extends BaseController{
         $wine->destroy();
         Redirect::to('/', array('message' => 'Viini '. $name .' on poistettu tietokannasta!'));
     }
-
-
-
 }

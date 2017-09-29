@@ -12,12 +12,10 @@ class UsersController extends BaseController{
         $user = User::authenticate($params['email'], $params['password']);
     
         if(!$user){
-            Kint::dump($user);
-            View::make('user/login.html', array('error' => 'Väärä käyttäjätunnus tai salasana!', 'email' => $params['email']));
+            $errors = array('error'=>'Väärä käyttäjätunnus tai salasana!');
+            View::make('user/login.html', array('errors' => $errors, 'email' => $params['email']));
         }else{
             $_SESSION['userid'] = $user->id;
-            Kint::dump($user);
-    
             Redirect::to('/', array('message' => 'Tervetuloa takaisin ' . $user->name . '!'));
         }
     }
