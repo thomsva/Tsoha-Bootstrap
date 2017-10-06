@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Muokkaa viiniarviota</h1>
+
+    <h2>Valittu viini: Bouchard La Vignée Pinot Noir 2014</h2>
+   
+    <p>Sanallinen arvio</p>
+    <textarea class="form-control" rows="3"></textarea>
+    <p>Arvio (tähdet)</p>
+    <select class="form-control">
+            <option>*</option>
+            <option>**</option>
+            <option>***</option>
+            <option>****</option>
+            <option>*****</option>
+    </select>
+
+    <p>
+    Valitse sopivat tägit:
+    <input type="checkbox" id="inlineCheckbox1" value="1"> Kirsikka
+    <input type="checkbox" id="inlineCheckbox1" value="2"> Mustikka
+    <input type="checkbox" id="inlineCheckbox1" value="3"> Raikas
+    <input type="checkbox" id="inlineCheckbox1" value="4"> Vanilja
+    <input type="checkbox" id="inlineCheckbox1" value="5"> Suklaa
+    </p>
+
+    <p>
+    <input class="btn btn-default" type="submit" value="Lähetä arvio">
+    </p>
+{% endblock %}
