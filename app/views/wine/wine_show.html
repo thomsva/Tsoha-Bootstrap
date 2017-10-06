@@ -20,35 +20,28 @@
           <a href="winereview" class="btn btn-default">Lisää oma arvio (under construction)</a>
       </p>
       {% endif %}
-      
-      
+
       <h2>Arviot</h2>
-      <p><strong>Huom! Alla oleva on vielä tässä vaiheessa staattista testidataa.</strong></p>
-      <p>Arvioita yhteensä</p>
-    
-
-
       <table class="table table-bordered table-striped">
         <tbody>
+            {% for review in reviews %}
           <tr>
-            <td>Vieno tuoksu, kevyt ja miellyttävä maku. Hieman karhea jälivaikutelma. </td>
-            <td><label class="label label-info">hunaja</label> <label class="label label-info">mustikka</label></td>
-            <td>Matti</td>
-            <td>****</td>
-
+            <td>{{review.reviewtext}}</td>
+            <td>Tagit: {{review.tags.tagtext}}
+              
+              {% for tag in review.tags %}
+              <label class="label label-info"> 
+              {{tag.tagtext}} 
+              </label>&nbsp
+              {% endfor %}
+              
+              
+              </td>
+            <td>User: {{review.userid}}</td>
+            <td>Stars: {{review.stars}}</td>
           </tr>
-          <tr>
-            <td>Kirsikkainen ryhdikäs maku. Sopivan hapokas. Ruokasuositus: kala tai vaalea liha. </td>
-            <td><label class="label label-info">kirsikka</label> <label class="label label-info">raikas</label></td>
-            <td>Maija</td>
-            <td>*****</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
-
-
-
-
-
 
 {% endblock %}

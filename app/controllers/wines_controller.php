@@ -24,8 +24,13 @@ class WinesController extends BaseController{
 
     public static function wineshow($id){
         $wine=Wine::find($id);
+        $reviews=Review::all($id);
         $user=self::get_user_logged_in();
-        View::make('wine/wine_show.html', array('wine'=>$wine, 'starstring'=>$wine->starstring(), 'user_logged_in'=>$user));
+        foreach($reviews as $r){
+            $r->tags();
+        }     
+        View::make('wine/wine_show.html', array('wine'=>$wine, 'starstring'=>$wine->starstring(),
+            'user_logged_in'=>$user, 'reviews'=>$reviews));
     }
 
     public static function create(){

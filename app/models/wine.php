@@ -71,6 +71,7 @@ class Wine extends BaseModel{
         } 
         return $x;
     }
+  
 
     public function save(){
         //tallentaa Wine-olion tietokantaan uutena rivinä
