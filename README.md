@@ -19,6 +19,7 @@ http://thsv.users.cs.helsinki.fi/wine/login
 ## Kirjautmisen vaativia linkkejä sivustolle 
 http://thsv.users.cs.helsinki.fi/wine/wine/new
 http://thsv.users.cs.helsinki.fi/wine/wine/edit/1
+http://thsv.users.cs.helsinki.fi/wine/review/new/1
 
 ## Mallisivuja, ei vielä toiminnallisuutta
 http://thsv.users.cs.helsinki.fi/wine/signup

@@ -24,16 +24,16 @@ VALUES ('Raimat Abadia',
 
 INSERT INTO Tag(tagText)
 VALUES 
-    ('herukka'),
-    ('vanilja'),
-    ('tammi'),
-    ('sitrus'),
     ('voimakas'),
+    ('tamminen'),
+    ('vaniljainen'),
+    ('lihan kanssa'),
+    ('kalan kanssa'),
     ('kevyt'),
     ('kaakao'),
-    ('pähkinä'),
-    ('hunaja'),
-    ('greippi')
+    ('pähkinäinen'),
+    ('makea'),
+    ('aromikas')
 ;
 
 INSERT INTO Review(usrid,wineid,reviewtext,stars)

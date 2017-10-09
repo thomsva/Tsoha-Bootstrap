@@ -7,16 +7,19 @@ class ReviewsController extends BaseController{
         // Tämä funktio tarkistaa wine -luokan ilmentymään syötettävää
         // tietoa Valitronin palveluita hyödyntäen. 
         $v->rule('lengthMax', 'reviewtext',500)->message('Kuvaus entintään 500 merkkiä');
+        $v->rule('required', 'reviewtext')->message('Kuvaus vaaditaan'); 
         $v->rule('required', 'stars')->message('1-5 tähteä vaaditaan'); 
         return $v->validate();
     }
 
     public static function create($wineid){
         $user=self::get_user_logged_in();
-        Kint::trace();
-        Kint::dump($wineid);
+        $wine=Wine::find($wineid);
+        $tags=Tag::all();
+        //Kint::trace();
+        //Kint::dump($wineid);
         if($user){
-            View::make('/review/new.html');  
+            View::make('/review/new.html', array('wine'=>$wine, 'tags'=>$tags));  
         }else{
             View::make('user/login.html', array('message' => 'Kirjaudu ensin sisään!'));
         }      
@@ -24,20 +27,25 @@ class ReviewsController extends BaseController{
 
     public static function store(){
         $params=$_POST;
+
+        $user=self::get_user_logged_in();
         $v = new Valitron\Validator($params); 
         if(self::validate_inputs($v)) {
-            $veview= new Review(array(
-                'userid' => $params['userid'],
+            $review= new Review(array(
+                'userid' => $user->id,
                 'wineid' => $params['wineid'],
                 'reviewtext' => $params['reviewtext'],
-                'stars' => $params['stars']
+                'stars' => $params['stars'],
+                'tags' => $params['tags']
             ));
+            Kint::dump($review);
+
             $review->save();
             Redirect::to('/wine/'.$review->wineid, array('message' => 'Arvion lisääminen onnistui!'));
         }else{
             // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi
             $errors=self::array_flatten($v->errors());
-            Redirect::to('/review/new' , array('review' => $params, 'errors' => $errors));
+            Redirect::to('/review/new/'.$params['wineid'] , array('review' => $params, 'errors' => $errors));
         }      
     }
 
@@ -79,10 +87,10 @@ class ReviewsController extends BaseController{
         }  
     }
 
-    public static function destroy($id){
-        $wine = Wine::find($id);
-        $name = $wine->name;
-        $wine->destroy();
-        Redirect::to('/', array('message' => 'Viini '. $name .' on poistettu tietokannasta!'));
+    public static function destroy($reviewid){
+        $review = Review::find($reviewid);
+        $wineid=$review->wineid;
+        $review->destroy();
+        Redirect::to('/wine/'.$wineid, array('message' => 'Arvio on poistettu tietokannasta!'));
     }
 }

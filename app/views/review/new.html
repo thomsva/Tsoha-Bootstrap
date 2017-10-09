@@ -4,39 +4,33 @@
 
     <h1>Lisää oma viiniarvostelu</h1>
 
-    <h2>Valittu viini: Bouchard La Vignée Pinot Noir 2014</h2>
-   
+    <h2>Valittu viini: {{wine.name}}</h2>
+    
+    <form method="post" action="{{base_path}}/review">
+    <input type="hidden" class="form-control" name="wineid" value="{{wine.id}}">
     <p>Sanallinen arvio</p>
     <textarea class="form-control" rows="3" name="reviewtext">{{review.reviewtext}}</textarea>
     <p>Arvio (tähdet)</p>
     <select class="form-control" name="stars">
-            <option>*</option>
-            <option>**</option>
-            <option>***</option>
-            <option>****</option>
-            <option>*****</option>
+            <option value="1">*</option>
+            <option value="2">**</option>
+            <option value="3">***</option>
+            <option value="4">****</option>
+            <option value="5">*****</option>
     </select>
+
 
     <p>
     Valitse sopivat tägit:
-    <input type="checkbox" id="inlineCheckbox1" value="1"> Kirsikka
-    <input type="checkbox" id="inlineCheckbox1" value="2"> Mustikka
-    <input type="checkbox" id="inlineCheckbox1" value="3"> Raikas
-    <input type="checkbox" id="inlineCheckbox1" value="4"> Vanilja
-    <input type="checkbox" id="inlineCheckbox1" value="5"> Suklaa
+    {% for tag in tags %}
+        <input type="checkbox" id="inlineCheckbox1" name="tags[]" value="{{tag.id}} "> {{tag.tagtext}} 
+    {%endfor%}
     </p>
 
     <p>
-    <input class="btn btn-default" type="submit" value="Lähetä arvio">
+    <button type="submit" class="btn btn-default">Lähetä</button>
     </p>
 
 
-
-    <form method="post" action="{{base_path}}/wine">
-        <input type="text" class="form-control" name="name" placeholder="Viinin nimi" value="{{wine.name}}">
-        <input type="text" class="form-control" name="region" placeholder="Alkuperä (alue)" value="{{wine.region}}">
-        <textarea class="form-control" rows="3" placeholder="Kuvaus" name="winetext">{{wine.winetext}}</textarea>
-        <input type="text" class="form-control" name="type" placeholder="Tyyppi" value="{{wine.type}}">
-        <button type="submit" class="btn btn-default">Lähetä</button>
     </form>
 {% endblock %}

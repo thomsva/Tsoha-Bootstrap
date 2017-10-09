@@ -50,6 +50,16 @@
     ReviewsController::create($wineid);
   });
 
+  $routes->post('/review', function() {
+    ReviewsController::store();
+  });
+
+  $routes->get('/review/delete/:reviewid', function($reviewid) {
+    ReviewsController::destroy($reviewid);
+  });
+
+  
+
   //Routes for login and signup
 
   $routes->get('/signup', function() {

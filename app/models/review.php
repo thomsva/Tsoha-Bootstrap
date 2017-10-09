@@ -20,30 +20,24 @@ class Review extends BaseModel{
         $reviews=array();
 
         foreach($rows as $row){
-            
-            
-
             $review=new Review(array(
                 'id'=>$row['id'],
                 'userid'=>$row['usrid'],
                 'wineid'=>$row['wineid'],
                 'reviewtext'=>$row['reviewtext'],
-                'stars'=>$row['stars'],
-                
-                
+                'stars'=>$row['stars']
             ));
-            
             $review->tags();
             $reviews[]=$review;
-
         }
+
         return $reviews;
     }
 
     public static function find($id){
         $query=DB::connection()->prepare(
             'SELECT * 
-            FROM Reviews
+            FROM Review
             WHERE id = :id LIMIT 1');
         $query->execute(array('id'=>$id));
         $row=$query->fetch();
@@ -89,16 +83,30 @@ class Review extends BaseModel{
     public function save(){
         //tallentaa Review-olion tietokantaan uutena rivinä
         $query = DB::connection()->prepare('
-            INSERT INTO Review (userid, wineid, reviewtext, stars) 
+            INSERT INTO Review (usrid, wineid, reviewtext, stars) 
             VALUES (:userid, :wineid, :reviewtext, :stars) RETURNING id');
         $query->execute(array(
-            'usrid' => $this->userid, 
+            'userid' => $this->userid, 
             'wineid' => $this->wineid, 
             'reviewtext' => $this->reviewtext, 
             'stars' => $this->stars));
         $row = $query->fetch();
         $this->id = $row['id'];
+        $this->savetags();
     }
+
+    public function savetags(){
+        foreach($this->tags as $tag){
+            $query = DB::connection()->prepare('
+            INSERT INTO Reviewtag (reviewid, tagid) 
+            VALUES (:reviewid, :tagid)');
+            $query->execute(array(
+                'reviewid' => $this->id, 
+                'tagid' => $tag 
+            ));
+        }
+    }
+
 
     public function update(){
         //tallentaa Review-olion muutokset tietokantaan 
@@ -126,8 +134,6 @@ class Review extends BaseModel{
     $query->execute(array(
         'id' => $this->id));        
     }
-
-
 
 
   }
