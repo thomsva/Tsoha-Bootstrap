@@ -16,7 +16,15 @@
         <tr>
           <td><a href="{{base_path}}/wine/{{wine.id}}">{{wine.name}}</a></td>
           <td>{{wine.type}}</td>
-          <td>{{wine.starstring()}} ({{wine.reviewcount}})</td>
+          <td>
+            {% if wine.reviewcount %}
+              {% for i in 1..wine.reviewstars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
+              ({{wine.reviewcount}})
+            {% else %}
+              Ei arvioita
+            {% endif %}
+          </td>
+
         </tr>
         {% endfor %}
       </tbody>
