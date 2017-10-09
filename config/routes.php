@@ -1,12 +1,16 @@
 <?php
 
+  $routes->get('/hiekkalaatikko', function() {
+    HelloWorldController::sandbox();
+  });
+
+  //Front page
+
   $routes->get('/', function() {
     WinesController::index();
   });
 
-  $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-  });
+  //Routes for Wine
 
   $routes->get('/wine', function() {
     WinesController::index();
@@ -40,9 +44,13 @@
     WinesController::destroy($id);
   });
 
-  $routes->get('/winereview', function() {
-    HelloWorldController::winereview();
+  //Routes for Reviews
+
+  $routes->get('/review/new/:wineid', function($wineid) {
+    ReviewsController::create($wineid);
   });
+
+  //Routes for login and signup
 
   $routes->get('/signup', function() {
     HelloWorldController::signup();
