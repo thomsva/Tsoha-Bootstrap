@@ -8,7 +8,7 @@
         <tr>
           <th>Nimi</th>
           <th>Tyyppi</th>
-          <th>Arviot</th>
+          <th>Arviot (lukumäärä)</th>
         </tr>
       </thead>
       <tbody>
@@ -18,7 +18,9 @@
           <td>{{wine.type}}</td>
           <td>
             {% if wine.reviewcount %}
-              {% for i in 1..wine.reviewstars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
+              <span title="{{wine.reviewstars}}">
+                {% for i in 1..wine.reviewstars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
+              <span>
               ({{wine.reviewcount}})
             {% else %}
               Ei arvioita
