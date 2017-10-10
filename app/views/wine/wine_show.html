@@ -5,8 +5,8 @@
   <h1>{{wine.name}}</h1>
   {% if user_logged_in %}
     <p>
-      <a href="{{base_path}}/wine/edit/{{wine.id}}" class="btn btn-default">Muokkaa tietoja</a> 
-      <a href="{{base_path}}/wine/delete/{{wine.id}}" class="btn btn-default">Poista</a> 
+      <a href="{{base_path}}/wine/edit/{{wine.id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Muokkaa tietoja</a> 
+      <a href="{{base_path}}/wine/delete/{{wine.id}}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Poista</a> 
     </p>
   {% endif %}
   <ul>
@@ -52,7 +52,7 @@
   </table>
   {% if user_logged_in %}
     <p>
-      <a href="{{base_path}}/review/new/{{wine.id}}" class="btn btn-default">Lisää oma arvio</a>
+      <a href="{{base_path}}/review/new/{{wine.id}}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Lisää oma arvio</a>
     </p>
   {% endif %}
 
