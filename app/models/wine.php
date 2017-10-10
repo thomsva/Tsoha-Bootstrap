@@ -14,7 +14,8 @@ class Wine extends BaseModel{
             FROM Wine
             LEFT JOIN (SELECT wineid, COALESCE(AVG(stars),0) AS reviewstars, 
                 COALESCE(COUNT (id),0) AS reviewcount FROM Review GROUP BY wineid) AS r
-            ON Wine.id=r.wineid;');
+            ON Wine.id=r.wineid
+            ORDER BY id');
         $query->execute();
         $rows=$query->fetchAll();
         $wines=array();

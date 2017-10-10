@@ -2,50 +2,58 @@
 
 {% block content %}
 
-    <h1>{{wine.name}}</h1>
-      <ul>
-        <li><strong>Alkuperä: </strong>{{wine.region}} </li>
-        <li><strong>Tyyppi: </strong>{{wine.type}}</li>
-        <li><strong>Arviot (lukumäärä): </strong>{{wine.reviewstars|number_format(2)}} ({{wine.reviewcount}})</li>
-      </ul>
+  <h1>{{wine.name}}</h1>
+  {% if user_logged_in %}
+    <p>
+      <a href="{{base_path}}/wine/edit/{{wine.id}}" class="btn btn-default">Muokkaa tietoja</a> 
+      <a href="{{base_path}}/wine/delete/{{wine.id}}" class="btn btn-default">Poista</a> 
+    </p>
+  {% endif %}
+  <ul>
+    <li><strong>Alkuperä: </strong>{{wine.region}} </li>
+    <li><strong>Tyyppi: </strong>{{wine.type}}</li>
+    <li><strong>Arviot (lukumäärä): </strong>{{wine.reviewstars|number_format(2)}} <span class="badge">{{wine.reviewcount}}</span></li>
+  </ul>
 
-      <p>
-        {{wine.winetext}}
-      </p>
+  <p>
+    {{wine.winetext}}
+  </p>
 
-      {% if user_logged_in %}
-      <p>
-          <a href="{{base_path}}/wine/edit/{{wine.id}}" class="btn btn-default">Muokkaa tietoja</a> 
-          <a href="{{base_path}}/wine/delete/{{wine.id}}" class="btn btn-default">Poista</a> 
-          <a href="{{base_path}}/review/new/{{wine.id}}" class="btn btn-default">Lisää oma arvio</a>
-      </p>
-      {% endif %}
+  
 
-      <h2>Arviot</h2>
-      <table class="table table-bordered table-striped">
-        <tbody>
-            {% for review in reviews %}
-          <tr>
-            <td>{{review.reviewtext}}</td>
-            <td>
-              {% for tag in review.tags %}
-              <label class="label label-info"> 
-              {{tag.tagtext}} 
-              </label>&nbsp
-              {% endfor %}
-            </td>
-            <td>
-              {{review.userid}}
-            </td>
-            <td>
-              {% for i in 1..review.stars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
-            </td>
-            <td>
-              {% if review.userid == user_logged_in.id %} <a href="{{base_path}}/review/delete/{{review.id}}" >Poista</a> {% endif %}
-            </td>
-          </tr>
+  <h2>Arviot</h2>
+  <table class="table table-bordered table-striped">
+    <tbody>
+        {% for review in reviews %}
+      <tr>
+        <td>{{review.reviewtext}}</td>
+        <td>
+          {% for tag in review.tags %}
+          <label class="label label-default"> 
+          {{tag.tagtext}} 
+          </label>&nbsp;
           {% endfor %}
-        </tbody>
-      </table>
+        </td>
+        <td>
+          {{review.userid}}
+        </td>
+        <td>
+          {% for i in 1..review.stars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
+        </td>
+        <td>
+          {% if review.userid == user_logged_in.id %}
+            <a href="{{base_path}}/review/delete/{{review.id}}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
+            <a href="{{base_path}}/review/edit/{{review.id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if user_logged_in %}
+    <p>
+      <a href="{{base_path}}/review/new/{{wine.id}}" class="btn btn-default">Lisää oma arvio</a>
+    </p>
+  {% endif %}
 
 {% endblock %}

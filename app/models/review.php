@@ -96,6 +96,14 @@ class Review extends BaseModel{
     }
 
     public function savetags(){
+        //poistaa ensin mahdolliset vanhat tagit
+        $query = DB::connection()->prepare('
+            DELETE FROM Reviewtag
+            WHERE reviewid=:id');
+        $query->execute(array(
+            'id' => $this->id));
+
+        //lisätään tagit tietokantaan
         foreach($this->tags as $tag){
             $query = DB::connection()->prepare('
             INSERT INTO Reviewtag (reviewid, tagid) 
@@ -115,24 +123,26 @@ class Review extends BaseModel{
             SET usrid=:userid, 
             wineid=:wineid, 
             reviewtext=:reviewtext,
-            stars=:stars
+            stars=:stars 
             WHERE id=:id');
         $query->execute(array(
-            'usrid' => $this->userid,
+            'id' => $this->id,
+            'userid' => $this->userid,
             'wineid' => $this->wineid, 
-            'region' => $this->region, 
             'reviewtext' => $this->reviewtext, 
-            'stars' => $this->stars));
+            'stars' => $this->stars
+        ));
+        $this->savetags();
     }
 
     
 
     public function destroy(){
         $query = DB::connection()->prepare('
-        DELETE FROM Review
-        WHERE id=:id');
-    $query->execute(array(
-        'id' => $this->id));        
+            DELETE FROM Review
+            WHERE id=:id');
+        $query->execute(array(
+            'id' => $this->id));        
     }
 
 

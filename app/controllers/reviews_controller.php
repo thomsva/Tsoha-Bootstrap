@@ -50,10 +50,13 @@ class ReviewsController extends BaseController{
     }
 
     public static function edit($id){
-        $wine=Wine::find($id);
+        $review=Review::find($id);
+        $wine=Wine::find($review->wineid);
+        $review->tags();
+        $tags=Tag::all();
         $user=self::get_user_logged_in();
         if($user){
-            View::make('wine/edit.html', array('wine'=>$wine, 'user_logged_in'=>$user));
+            View::make('review/edit.html', array('review'=>$review, 'wine'=>$wine, 'tags'=>$tags));
         }else{
             View::make('user/login.html', array('message' => 'Kirjaudu ensin sisään!'));
         }
@@ -69,21 +72,23 @@ class ReviewsController extends BaseController{
 
     public static function update(){
         $params=$_POST;
+        $user=self::get_user_logged_in();
         $v = new Valitron\Validator($params); 
         if(self::validate_inputs($v)) {
-            $wine= new Wine(array(
+            $review= new Review(array(
                 'id' => $params['id'],
-                'name' => $params['name'],
-                'region' => $params['region'],
-                'winetext' => $params['winetext'],
-                'type' => $params['type']
+                'userid' => $user->id,
+                'wineid' => $params['wineid'],
+                'reviewtext' => $params['reviewtext'],
+                'stars' => $params['stars'],
+                'tags' => $params['tags']
             ));
-            $wine->update();
-            Redirect::to('/wine/' . $wine->id, array('message' => 'Tietojen muokkaaminen onnistui!'));
+            $review->update();           
+            Redirect::to('/wine/' . $review->wineid, array('message' => 'Arvion muokkaaminen onnistui!!'));
         }else{
             // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi
             $errors=self::array_flatten($v->errors());
-            Redirect::to('/wine/edit/' . $params['id'] , array('wine'=>$params, 'errors' => $errors));
+            Redirect::to('/review/edit/' . $params['id'] , array('review'=>$params, 'errors' => $errors));
         }  
     }
 

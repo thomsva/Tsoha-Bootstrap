@@ -6,9 +6,10 @@
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th>Nimi</th>
-          <th>Tyyppi</th>
-          <th>Arviot (lukumäärä)</th>
+          <th>Nimi </th>
+          <th>Tyyppi </th>
+          <th>Arviot </th>
+          <th>Lukumäärä </th>
         </tr>
       </thead>
       <tbody>
@@ -18,13 +19,15 @@
           <td>{{wine.type}}</td>
           <td>
             {% if wine.reviewcount %}
-              <span title="{{wine.reviewstars}}">
-                {% for i in 1..wine.reviewstars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
-              <span>
-              ({{wine.reviewcount}})
+              <span data-toggle="tooltip" title="{{wine.reviewstars|number_format(2)}}">
+                {% for i in 1..wine.reviewstars|round(0) %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
+                
             {% else %}
               Ei arvioita
             {% endif %}
+          </td>
+          <td>
+              <span class="badge">{{wine.reviewcount}}</span></span>
           </td>
 
         </tr>

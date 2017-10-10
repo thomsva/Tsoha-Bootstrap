@@ -54,6 +54,14 @@
     ReviewsController::store();
   });
 
+  $routes->get('/review/edit/:reviewid', function($reviewid) {
+    ReviewsController::edit($reviewid);
+  });
+
+  $routes->post('/review/update', function() {
+    ReviewsController::update();
+  });
+
   $routes->get('/review/delete/:reviewid', function($reviewid) {
     ReviewsController::destroy($reviewid);
   });
