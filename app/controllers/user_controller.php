@@ -2,6 +2,16 @@
 
 class UsersController extends BaseController{
 
+    private static function validate_inputs($v){
+        // Validoitiin käytetään Valitron\Validator luokan ilmentymää. 
+        // Tämä funktio tarkistaa wine -luokan ilmentymään syötettävää
+        // tietoa Valitronin palveluita hyödyntäen. 
+        $v->rule('lengthMax', 'email',50)->message('Sähköposti entintään 30 merkkiä');
+        $v->rule('required', 'email')->message('Sähköposti vaaditaan'); 
+        $v->rule('required', 'password')->message('Anna myös salasana'); 
+        return $v->validate();
+    }
+
     public static function login() {
         View::make('user/login.html');
     }
@@ -25,6 +35,30 @@ class UsersController extends BaseController{
         Redirect::to('/', array('message' => 'Olet kirjautunut ulos!'));
 
 
+    }
+
+    public static function signup(){
+        View::make('user/signup.html');
+    } 
+
+
+    public static function store(){
+        $params=$_POST;
+        $v = new Valitron\Validator($params); 
+        if(self::validate_inputs($v)) {
+            $user= new User(array(
+                'email' => $params['email'],
+                'name' => $params['name'],
+                'password' => $params['password']
+            ));
+            $user->save();
+            $_SESSION['userid'] = $user->id;
+            Redirect::to('/', array('message' => 'Tervetuloa käyttäjäksi ' . $user->name . '!'));
+        }else{
+            // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi
+            $errors=self::array_flatten($v->errors());
+            Redirect::to('/signup' , array('user' => $params, 'errors' => $errors));
+        }      
     }
 
 }

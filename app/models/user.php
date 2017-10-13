@@ -44,6 +44,20 @@ class User extends BaseModel{
         }
     }
 
+    public function save(){
+        //tallentaa uuden User-olion tietokantaan
+        $query = DB::connection()->prepare('
+            INSERT INTO Usr (email, name, password) 
+            VALUES (:email, :name, :password) RETURNING id');
+        $query->execute(array(
+            'email' => $this->email, 
+            'name' => $this->name, 
+            'password' => $this->password 
+            ));
+        $row = $query->fetch();
+        $this->id = $row['id'];
+    }
+
 
     
 }

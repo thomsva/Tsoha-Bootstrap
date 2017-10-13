@@ -71,8 +71,13 @@
   //Routes for login and signup
 
   $routes->get('/signup', function() {
-    HelloWorldController::signup();
+    UsersController::signup();
   });
+
+  $routes->post('/signup', function() {
+    UsersController::store();
+  });
+
 
   $routes->get('/login', function(){
     UsersController::login();
