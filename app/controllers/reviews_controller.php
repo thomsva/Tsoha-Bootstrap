@@ -4,7 +4,7 @@ class ReviewsController extends BaseController{
 
     private static function validate_inputs($v){
         // Validoitiin käytetään Valitron\Validator luokan ilmentymää. 
-        // Tämä funktio tarkistaa wine -luokan ilmentymään syötettävää
+        // Tämä funktio tarkistaa review -luokan ilmentymään syötettävää
         // tietoa Valitronin palveluita hyödyntäen. 
         $v->rule('lengthMax', 'reviewtext',500)->message('Kuvaus entintään 500 merkkiä');
         $v->rule('required', 'reviewtext')->message('Kuvaus vaaditaan'); 
@@ -16,8 +16,6 @@ class ReviewsController extends BaseController{
         $user=self::get_user_logged_in();
         $wine=Wine::find($wineid);
         $tags=Tag::all();
-        //Kint::trace();
-        //Kint::dump($wineid);
         if($user){
             View::make('/review/new.html', array('wine'=>$wine, 'tags'=>$tags));  
         }else{
@@ -31,6 +29,12 @@ class ReviewsController extends BaseController{
         $user=self::get_user_logged_in();
         $v = new Valitron\Validator($params); 
         if(self::validate_inputs($v)) {
+
+            if (!isset($params['tags'])){
+                //Lisätään tyhjä array, jos yhtään tagia ei valittu
+                $params['tags']=array();
+            }
+
             $review= new Review(array(
                 'userid' => $user->id,
                 'wineid' => $params['wineid'],
@@ -38,7 +42,7 @@ class ReviewsController extends BaseController{
                 'stars' => $params['stars'],
                 'tags' => $params['tags']
             ));
-            Kint::dump($review);
+            
 
             $review->save();
             Redirect::to('/wine/'.$review->wineid, array('message' => 'Arvion lisääminen onnistui!'));
@@ -75,6 +79,11 @@ class ReviewsController extends BaseController{
         $user=self::get_user_logged_in();
         $v = new Valitron\Validator($params); 
         if(self::validate_inputs($v)) {
+
+            if (!isset($params['tags'])){
+                //Lisätään tyhjä array, jos yhtään tagia ei valittu
+                $params['tags']=array();
+            }
             $review= new Review(array(
                 'id' => $params['id'],
                 'userid' => $user->id,

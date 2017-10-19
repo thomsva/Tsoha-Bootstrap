@@ -12,6 +12,7 @@
     <p>Sanallinen arvio</p>
     <textarea class="form-control" rows="3" name="reviewtext">{{review.reviewtext}}</textarea>
     <p>Arvio (tähdet)</p>
+    <input type="hidden" name="stars" value="">
     <select class="form-control" name="stars">
             <option value="1" {% if review.stars==1 %}selected{% endif %} >*</option>
             <option value="2" {% if review.stars==2 %}selected{% endif %} >**</option>

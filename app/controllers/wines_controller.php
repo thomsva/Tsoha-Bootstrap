@@ -25,7 +25,6 @@ class WinesController extends BaseController{
     public static function wineshow($id){
         $wine=Wine::find($id);
         $reviews=Review::all($id);
-        kint::dump($reviews);
         $user=self::get_user_logged_in();
         foreach($reviews as $r){
             $r->tags();

@@ -9,6 +9,8 @@ class UsersController extends BaseController{
         $v->rule('lengthMax', 'email',50)->message('Sähköposti entintään 30 merkkiä');
         $v->rule('required', 'email')->message('Sähköposti vaaditaan'); 
         $v->rule('required', 'password')->message('Anna myös salasana'); 
+        $v->rule('equals', 'password', 'password_confirm')->message('Salasanat eivät täsmää'); 
+
         return $v->validate();
     }
 

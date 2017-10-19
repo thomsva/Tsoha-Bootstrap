@@ -28,11 +28,11 @@ class Review extends BaseModel{
                 'wineid'=>$row['wineid'],
                 'reviewtext'=>$row['reviewtext'],
                 'stars'=>$row['stars'],
-                'username'=>&row['usrname']
+                'username'=>$row['usrname']
             ));
             $review->tags();
             $reviews[]=$review;
-            kint::dump(review);
+
         }
 
         return $reviews;
@@ -43,7 +43,7 @@ class Review extends BaseModel{
             'SELECT Review.* , Usr.name AS username
             FROM Review
             LEFT JOIN Usr
-            ON Review.userid=Usr.id
+            ON Review.usrid=Usr.id
             WHERE Review.id = :id LIMIT 1');
         $query->execute(array('id'=>$id));
         $row=$query->fetch();
@@ -55,7 +55,7 @@ class Review extends BaseModel{
                 'wineid'=>$row['wineid'],
                 'reviewtext'=>$row['reviewtext'],
                 'stars'=>$row['stars'],
-                'username'=>&row['username']
+                'username'=>$row['username']
             ));
             return $review;
             

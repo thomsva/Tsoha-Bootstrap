@@ -12,7 +12,7 @@
   <ul>
     <li><strong>Alkuperä: </strong>{{wine.region}} </li>
     <li><strong>Tyyppi: </strong>{{wine.type}}</li>
-    <li><strong>Arviot (lukumäärä): </strong>{{wine.reviewstars|number_format(2)}} <span class="badge">{{wine.reviewcount}}</span></li>
+    <li><strong>Arviot (lukumäärä): </strong>{{wine.reviewstars|number_format(2)}} <span class="badge">{{wine.reviewcount}} kpl</span></li>
   </ul>
 
   <p>
@@ -35,7 +35,7 @@
           {% endfor %}
         </td>
         <td>
-          {{review.userid}}{{review.username}}
+          {{review.username}}
         </td>
         <td>
           {% for i in 1..review.stars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
