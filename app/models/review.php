@@ -2,7 +2,7 @@
 
 class Review extends BaseModel{
 
-    public $id, $userid, $wineid, $reviewtext, $stars, $tags;
+    public $id, $userid, $wineid, $reviewtext, $stars, $tags, $username;
 
     public function _construct($attributes){
         parent::_construct($attributes);
@@ -10,8 +10,10 @@ class Review extends BaseModel{
 
     public static function all($wineid){
         $query=DB::connection()->prepare(
-            'SELECT * 
-            FROM Review
+            'SELECT Review.id, Review.usrid, Review.wineid, Review.reviewtext,
+            Review.stars, Usr.name AS usrname
+            FROM Review LEFT JOIN Usr
+            ON Review.usrid=Usr.id
             WHERE wineid=:wineid
             ORDER BY id');
         $query->execute(array(
@@ -25,10 +27,12 @@ class Review extends BaseModel{
                 'userid'=>$row['usrid'],
                 'wineid'=>$row['wineid'],
                 'reviewtext'=>$row['reviewtext'],
-                'stars'=>$row['stars']
+                'stars'=>$row['stars'],
+                'username'=>&row['usrname']
             ));
             $review->tags();
             $reviews[]=$review;
+            kint::dump(review);
         }
 
         return $reviews;
@@ -36,9 +40,11 @@ class Review extends BaseModel{
 
     public static function find($id){
         $query=DB::connection()->prepare(
-            'SELECT * 
+            'SELECT Review.* , Usr.name AS username
             FROM Review
-            WHERE id = :id LIMIT 1');
+            LEFT JOIN Usr
+            ON Review.userid=Usr.id
+            WHERE Review.id = :id LIMIT 1');
         $query->execute(array('id'=>$id));
         $row=$query->fetch();
 
@@ -48,9 +54,11 @@ class Review extends BaseModel{
                 'userid'=>$row['usrid'],
                 'wineid'=>$row['wineid'],
                 'reviewtext'=>$row['reviewtext'],
-                'stars'=>$row['stars']
+                'stars'=>$row['stars'],
+                'username'=>&row['username']
             ));
             return $review;
+            
         }
         return null;        
     }
@@ -75,9 +83,10 @@ class Review extends BaseModel{
         $this->tags=$tags;
             
         return $this;
-        
-               
+
     }
+
+
 
 
     public function save(){
