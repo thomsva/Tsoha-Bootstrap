@@ -51,6 +51,7 @@
           </span>
             <span class="navbar-text" style="float:right">
               {% if user_logged_in %}Kirjautunut käyttäjä: {{user_logged_in.name}}{% endif %}
+              
             </span>
           
         </div>
@@ -59,6 +60,11 @@
 
     <div id="main-container">
       <!-- Dynaaminen sisältö tulee tähän -->
+      {% if user_logged_in.admin%}
+        <div class="alert alert-info">
+          <strong>Huom!</strong> Olet kirjautunut sisään pääkäyttäjän oikeuksilla. Pääkäyttäjä voi lisätä, poistaa ja muokata viinejä. 
+        </div>
+      {% endif %}
       {% if message %}
         <div class="alert alert-success alert-dismissible" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

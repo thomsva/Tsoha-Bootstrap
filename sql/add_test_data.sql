@@ -1,10 +1,11 @@
 -- Lisää INSERT INTO lauseet tähän tiedostoon
 
 
-INSERT INTO Usr (email, name, password)
+INSERT INTO Usr (email, name, admin, password)
 VALUES 
-    ('thomas@helsinki', 'Thomas', '123'),
-    ('testi@domain','Testaaja','123')
+    ('admin@wine', 'Pääkäyttäjä', 'true',  '321'),
+    ('thomas@helsinki', 'Thomas', 'false', '123'),
+    ('testi@wine','Testaaja', 'false', '123')
 ;
 
 INSERT INTO Wine (name, region, wineText,type)
@@ -24,16 +25,28 @@ VALUES ('Raimat Abadia',
 
 INSERT INTO Tag(tagText)
 VALUES 
-    ('voimakas'),
-    ('tamminen'),
-    ('vaniljainen'),
+    ('hyvä hinta-laatusuhde'),
     ('lihan kanssa'),
     ('kalan kanssa'),
+    ('riistaruokien kanssa'),
+    ('kasvisruokien kanssa'),
+    ('voimakas'),
     ('kevyt'),
-    ('kaakao'),
-    ('pähkinäinen'),
+    ('raikas'),
+    ('kuiva'),
     ('makea'),
-    ('aromikas')
+    ('kupliva'),
+    ('maukas'),
+    ('aromikas'),
+    ('tamminen'),
+    ('vaniljainen'),
+    ('mineraalinen'),    
+    ('pähkinäinen'),
+    ('herukkainen'),
+    ('marjainen'),
+    ('raskas'),
+    ('kitkerä'),
+    ('hapan')
 ;
 
 INSERT INTO Review(usrid,wineid,reviewtext,stars)

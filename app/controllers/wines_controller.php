@@ -22,6 +22,13 @@ class WinesController extends BaseController{
         View::make('wine/index.html', array('wines'=>$wines, 'user_logged_in'=>$user));
     }
 
+    public static function filter($tagid){
+        $wines=Wine::filtered($tagid);
+        $user=self::get_user_logged_in();    
+        $tag=Tag::find($tagid);
+        View::make('wine/index.html', array('wines'=>$wines, 'filter'=>$tag , 'user_logged_in'=>$user));
+    }
+
     public static function wineshow($id){
         $wine=Wine::find($id);
         $reviews=Review::all($id);
@@ -71,13 +78,14 @@ class WinesController extends BaseController{
         }
     }
 
-    public static function retry_edit($id){
+    /*public static function retry_edit($id){
         // Kun käyttäjän tietoja ei hyväksytty.
         // Tehdään uusi lomake käyttäjän antamilla tiedoilla korjausta varten. 
         $params=$_POST;;
         $user=self::get_user_logged_in();
         View::make('wine/edit.html', array('wine'=>$params, 'user_logged_in'=>$user));
     }
+    */
 
     public static function update(){
         $params=$_POST;

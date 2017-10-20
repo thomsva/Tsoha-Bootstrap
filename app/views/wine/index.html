@@ -1,7 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Lista viineistä</h1>
+
+    {% if filter.id %}
+    <h1>Suodatettu lista viineistä</h1>
+    <p>
+      Näytetään seuraavalla tagilla merkityt viinit: 
+    </p>
+    <p>
+      <a href="{{base_path}}/filter/{{filter.id}}" class="btn btn-default"> {{filter.tagtext}} </a> 
+      <a href="{{base_path}}" class="btn btn-default"> 
+        Palaa suodattamattomaan listaan
+      </a>&nbsp;
+    </p>
+    {% else %}
+      <h1>Lista viineistä {{filter.tagtext}}</h1>
+    {% endif %}
 
     <table class="table table-bordered table-striped">
       <thead>
@@ -35,7 +49,7 @@
       </tbody>
     </table>
 
-    {% if user_logged_in %}
+    {% if user_logged_in.admin%}
     <p>
        <a href="{{base_path}}/wine/new" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Lisää viini</a>
     </p>

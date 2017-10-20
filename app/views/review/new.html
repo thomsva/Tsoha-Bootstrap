@@ -24,7 +24,7 @@
     <p>
     Valitse sopivat tägit:
     {% for tag in tags %}
-        <input type="checkbox" id="inlineCheckbox1" name="tags[]" value="{{tag.id}} "> {{tag.tagtext}} 
+        <input type="checkbox" id="inlineCheckbox1" name="tags[]" value="{{tag.id}} ">&nbsp;{{tag.tagtext}} 
     {%endfor%}
     </p>
 

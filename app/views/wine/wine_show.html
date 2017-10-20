@@ -3,7 +3,7 @@
 {% block content %}
 
   <h1>{{wine.name}}</h1>
-  {% if user_logged_in %}
+  {% if user_logged_in.admin%}
     <p>
       <a href="{{base_path}}/wine/edit/{{wine.id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Muokkaa tietoja</a> 
       <a href="{{base_path}}/wine/delete/{{wine.id}}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Poista</a> 
@@ -24,14 +24,23 @@
   <h2>Arviot</h2>
   <table class="table table-bordered table-striped">
     <tbody>
+        <thead>
+            <tr>
+              <th>Arvio </th>
+              <th>Tägit </th>
+              <th>Käyttäjä </th>
+              <th>Tähdet </th>
+              <th>Muokkaus </th>
+            </tr>
+          </thead>
         {% for review in reviews %}
       <tr>
         <td>{{review.reviewtext}}</td>
         <td>
           {% for tag in review.tags %}
-          <label class="label label-default"> 
+          <a class="label label-default" href="{{base_path}}/filter/{{tag.id}}"> 
           {{tag.tagtext}} 
-          </label>&nbsp;
+          </a>&nbsp;
           {% endfor %}
         </td>
         <td>
@@ -41,9 +50,9 @@
           {% for i in 1..review.stars %}<span class="glyphicon glyphicon-star"></span>{% endfor %}
         </td>
         <td>
-          {% if review.userid == user_logged_in.id %}
-            <a href="{{base_path}}/review/delete/{{review.id}}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
-            <a href="{{base_path}}/review/edit/{{review.id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
+          {% if (review.userid == user_logged_in.id) or (user_logged_in.admin) %}
+            <a href="{{base_path}}/review/delete/{{review.id}}"><span class="glyphicon glyphicon-remove"></span></a>
+            <a href="{{base_path}}/review/edit/{{review.id}}"><span class="glyphicon glyphicon-edit"></span></a>
           {% endif %}
         </td>
       </tr>

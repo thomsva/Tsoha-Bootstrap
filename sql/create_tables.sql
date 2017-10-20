@@ -2,6 +2,7 @@ CREATE TABLE Usr(
 id SERIAL PRIMARY KEY,
 email	varchar(50) NOT NULL,
 name varchar(50) NOT NULL,
+admin boolean DEFAULT false,
 password varchar(50) NOT NULL
 );
 

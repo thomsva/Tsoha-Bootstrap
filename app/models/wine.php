@@ -35,6 +35,38 @@ class Wine extends BaseModel{
         return $wines;
     }
 
+    public static function filtered($tagid){
+        $query=DB::connection()->prepare(
+            'SELECT DISTINCT Wine.id,name,region,winetext,type,reviewstars,reviewcount 
+            FROM Wine
+            LEFT JOIN (SELECT wineid, COALESCE(AVG(stars),0) AS reviewstars, 
+                COALESCE(COUNT (id),0) AS reviewcount FROM Review GROUP BY wineid) AS r
+            ON Wine.id=r.wineid
+            LEFT JOIN Review
+            ON Wine.id=Review.wineid
+            LEFT JOIN Reviewtag 
+            ON Review.id=Reviewtag.reviewid
+            WHERE Reviewtag.tagid= :tagid
+            ORDER BY Wine.id');
+        $query->execute(array('tagid'=>$tagid));
+        $rows=$query->fetchAll();
+        $wines=array();
+
+        foreach($rows as $row){
+
+            $wines[]=new Wine(array(
+                'id'=>$row['id'],
+                'name'=>$row['name'],
+                'region'=>$row['region'],
+                'winetext'=>$row['winetext'],
+                'type'=>$row['type'],
+                'reviewstars'=>$row['reviewstars'],
+                'reviewcount'=>$row['reviewcount']
+            ));
+        }
+        return $wines;
+    }
+
     public static function find($id){
         $query=DB::connection()->prepare(
             'SELECT id,name,region,winetext,type,reviewstars,reviewcount 

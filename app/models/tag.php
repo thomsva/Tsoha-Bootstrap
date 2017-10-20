@@ -30,6 +30,25 @@ class Tag extends BaseModel{
         }
         return $tags;
     }
+
+    public static function find($id){
+        $query=DB::connection()->prepare(
+            'SELECT * 
+            FROM Tag
+            WHERE id = :id LIMIT 1');
+        $query->execute(array('id'=>$id));
+        $row=$query->fetch();
+
+        if($row){
+            $tag=new Tag(array(
+                'id'=>$row['id'],
+                'tagtext'=>$row['tagtext']
+            ));
+            return $tag;
+            
+        }
+        return null;        
+    }
     
 
 

@@ -16,6 +16,10 @@
     WinesController::index();
   });
 
+  $routes->get('/filter/:tagid', function($tagid) {
+    WinesController::filter($tagid);
+  });
+
   $routes->post('/wine', function() {
     WinesController::store();
   });
@@ -32,9 +36,9 @@
     WinesController::edit($id);
   });
 
-  $routes->post('/wine/edit/:id', function($id) {
-    WinesController::retry_edit();
-  });
+  //$routes->post('/wine/edit/:id', function($id) {
+  //  WinesController::retry_edit();
+  //});
 
   $routes->post('/wine/update', function() {
     WinesController::update();
