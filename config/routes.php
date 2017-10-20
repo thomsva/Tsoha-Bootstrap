@@ -1,8 +1,6 @@
 <?php
 
-  $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-  });
+
 
   //Front page
 
@@ -35,10 +33,6 @@
   $routes->get('/wine/edit/:id', function($id) {
     WinesController::edit($id);
   });
-
-  //$routes->post('/wine/edit/:id', function($id) {
-  //  WinesController::retry_edit();
-  //});
 
   $routes->post('/wine/update', function() {
     WinesController::update();
