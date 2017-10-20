@@ -26,6 +26,16 @@ class User extends BaseModel{
         return null;
     }
 
+    public static function unique($email){
+        $query = DB::connection()->prepare('SELECT * FROM usr WHERE email = :email LIMIT 1');
+        $query->execute(array('email' => $email));
+        $row = $query->fetch();
+
+        if($row){
+            return false;
+        }
+        return true;
+    }
 
 
     public static function authenticate($email,$password){

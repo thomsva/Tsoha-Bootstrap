@@ -48,7 +48,9 @@ class UsersController extends BaseController{
     public static function store(){
         $params=$_POST;
         $v = new Valitron\Validator($params); 
-        if(self::validate_inputs($v)) {
+        $unique=User::unique($params['email']);
+        
+        if(self::validate_inputs($v) and $unique) {
             $user= new User(array(
                 'email' => $params['email'],
                 'name' => $params['name'],
@@ -60,7 +62,9 @@ class UsersController extends BaseController{
         }else{
             // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi
             $errors=self::array_flatten($v->errors());
-            Redirect::to('/signup' , array('user' => $params, 'errors' => $errors));
+            Kint::dump($errors);
+            Kint::dump($unique);
+            //Redirect::to('/signup' , array('user' => $params, 'errors' => $errors));
         }      
     }
 
