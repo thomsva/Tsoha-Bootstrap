@@ -7,7 +7,9 @@ class UsersController extends BaseController{
         // Tämä funktio tarkistaa wine -luokan ilmentymään syötettävää
         // tietoa Valitronin palveluita hyödyntäen. 
         $v->rule('lengthMax', 'email',50)->message('Sähköposti entintään 30 merkkiä');
+        $v->rule('lengthMax', 'name',50)->message('Nimi entintään 30 merkkiä');
         $v->rule('required', 'email')->message('Sähköposti vaaditaan'); 
+        $v->rule('required', 'name')->message('Nimi vaaditaan'); 
         $v->rule('required', 'password')->message('Anna myös salasana'); 
         $v->rule('equals', 'password', 'password_confirm')->message('Salasanat eivät täsmää'); 
         $v->rule('email', 'email')->message('Sähköpostiosoite ei kelpaa'); 
@@ -62,9 +64,10 @@ class UsersController extends BaseController{
         }else{
             // Valitronin tuottamat virheviestit litistetään yksinkertaiseksi listaksi
             $errors=self::array_flatten($v->errors());
-            Kint::dump($errors);
-            Kint::dump($unique);
-            //Redirect::to('/signup' , array('user' => $params, 'errors' => $errors));
+            if(!$unique){
+                $errors[]="Sähköpostiosoitteella on jo olemassa toinen käyttäjä";
+            }
+            Redirect::to('/signup' , array('user' => $params, 'errors' => $errors));
         }      
     }
 
